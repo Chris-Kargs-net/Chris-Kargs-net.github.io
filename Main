@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!-- Ensures proper scaling on modern smartphones and mobile screens -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minimalist Zero-Bloat Template</title>
+    <style>
+        /* Zero bloat presentation: lightweight layout boundaries */
+        body {
+            font-family: sans-serif;
+            line-height: 1.5;
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 0 20px;
+            color: #222;
+            background-color: #fff;
+        }
+        header, footer {
+            text-align: center;
+        }
+        nav ul {
+            list-style: none;
+            padding: 0;
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th, td {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #f4f4f4;
+        }
+        input, textarea {
+            width: 100%;
+            padding: 8px;
+            margin: 5px 0 15px 0;
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>My Ultra-Lightweight Site</h1>
+        <p>No framework. No tracking. No JavaScript. Pure content.</p>
+        <nav>
+            <ul>
+                <li><a href="#about">About</a></li>
+                <li><a href="#data">Data</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+        <hr>
+    </header>
+
+    <main>
+        <section id="about">
+            <h2>Why This Architecture?</h2>
+            <p>By using standard HTML5 tags with a tiny styling block, the page remains under 4KB, parses instantly, and renders accurately across every imaginable browsing platform.</p>
+        </section>
+
+        <section id="data">
+            <h2>Clean Data Tables</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Metric</th>
+                        <th>Performance Advantage</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Page Weight</td>
+                        <td>99% lighter than average web pages</td>
+                    </tr>
+                    <tr>
+                        <td>JS Overhead</td>
+                        <td>0ms execution time</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section id="contact">
+            <h2>Drop a Message</h2>
+            <form action="/submit-handler" method="POST">
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" required>
+
+                <label for="message">Message:</label>
+                <textarea id="message" name="message" rows="4" required></textarea>
+
+                <button type="submit">Send Message</button>
+            </form>
+        </section>
+    </main>
+
+    <footer>
+        <hr>
+        <p>&copy; 2026. Built for the open web.</p>
+    </footer>
+
+</body>
+</html>
