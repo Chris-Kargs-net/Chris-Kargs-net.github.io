@@ -1,113 +1,278 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <!-- Ensures proper scaling on modern smartphones and mobile screens -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Minimalist Zero-Bloat Template</title>
-    <style>
-        /* Zero bloat presentation: lightweight layout boundaries */
-        body {
-            font-family: sans-serif;
-            line-height: 1.5;
-            max-width: 800px;
-            margin: 40px auto;
-            padding: 0 20px;
-            color: #222;
-            background-color: #fff;
-        }
-        header, footer {
-            text-align: center;
-        }
-        nav ul {
-            list-style: none;
-            padding: 0;
-            display: flex;
-            gap: 15px;
-            justify-content: center;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 20px 0;
-        }
-        th, td {
-            border: 1px solid #ccc;
-            padding: 10px;
-            text-align: left;
-        }
-        th {
-            background-color: #f4f4f4;
-        }
-        input, textarea {
-            width: 100%;
-            padding: 8px;
-            margin: 5px 0 15px 0;
-            box-sizing: border-box;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Christopher Karg</title>
+  <style>
+    * { box-sizing: border-box; }
+    html, body { margin: 0; }
+    body {
+      background: #fff;
+      color: #aaa;
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 14px;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: inherit; text-decoration: none; }
+    ul { margin: 0; padding: 0; list-style: none; }
+
+    #sidebar {
+      position: fixed;
+      inset: 0 auto 0 0;
+      width: 270px;
+      height: 100%;
+      overflow-y: auto;
+      background: #fff;
+      z-index: 20;
+      text-align: left;
+    }
+    #sidebar .inner { padding: 40px 40px 24px; }
+    .site-title {
+      display: block;
+      margin: 0 0 20px;
+      color: #000000;
+      font-size: 28px;
+      line-height: 26px;
+      font-weight: 300;
+      letter-spacing: 0;
+      text-transform: uppercase;
+    }
+    nav { margin-top: 32px; }
+    nav a {
+      display: block;
+      color: #444;
+      font-size: 16px;
+      line-height: 22px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+    nav .nav-heading {
+      display: block;
+      color: #444;
+      font-size: 16px;
+      line-height: 22px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+    nav li { margin: 0 0 6px; }
+    nav ul ul { margin: 6px 0 6px 15px; }
+    #subcategory-nav,
+    #drawer-subcategory-nav {
+        margin: 6px 0 6px 15px;
+    }
+    #subcategory-nav a,
+    #drawer-subcategory-nav a {
+        font-size: 14px;
+        line-height: 20px;
+        letter-spacing: 0;
+        text-transform: none;
+    }
+    #drawer-subcategory-nav { margin-left: 0; }
+    #drawer-subcategory-nav a { padding-left: 30px; }
+    nav ul ul li { margin-bottom: 6px; }
+    nav ul ul a { font-size: 16px; }
+    #social {
+      display: flex;
+      gap: 7px;
+      margin: 32px 0 30px;
+    }
+    #social a { display: block; width: 14px; height: 14px; }
+    #social img { width: 14px; height: 14px; object-fit: contain; }
+    #copyright { color: #aaa; font-size: 11px; }
+
+    #main {
+      margin-left: 270px;
+      min-height: 100vh;
+      padding: 40px 57px 40px 30px;
+      text-align: center;
+    }
+    #artwork {
+      display: inline-block;
+      max-width: 770px;
+      width: 100%;
+      margin: 0 auto;
+      background: #f4f4f4;
+      line-height: 0;
+    }
+    #artwork img {
+      display: block;
+      width: 100%;
+      max-height: 800px;
+      object-fit: contain;
+    }
+
+    #topbar,
+    #drawer { display: none; }
+
+    @media (max-width: 767px) {
+      #sidebar { display: none; }
+      #topbar {
+        display: block;
+        position: fixed;
+        inset: 0 0 auto 0;
+        height: 50px;
+        background: #fff;
+        z-index: 30;
+      }
+      #menu-button {
+        position: absolute;
+        left: 15px;
+        top: 0;
+        width: 30px;
+        height: 50px;
+        border: 0;
+        background: transparent;
+        padding: 0;
+        cursor: pointer;
+        color: #444;
+      }
+      #menu-button::before {
+        content: "☰";
+        display: block;
+        font-size: 22px;
+        line-height: 50px;
+      }
+      #page-controls {
+        position: absolute;
+        right: 15px;
+        top: 0;
+        height: 50px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+      #page-controls button {
+        border: 0;
+        background: transparent;
+        color: #444;
+        font-size: 22px;
+        line-height: 50px;
+        padding: 0;
+      }
+      #drawer {
+        display: block;
+        position: fixed;
+        z-index: 40;
+        inset: 0 auto 0 0;
+        width: 240px;
+        overflow-y: auto;
+        background: #26162c;
+        transform: translateX(-260px);
+        transition: transform .25s ease;
+        padding: 15px 0;
+      }
+      #drawer.open { transform: translateX(0); }
+      #drawer nav { margin: 10px 0 20px; }
+      #drawer nav a {
+        display: block;
+        padding: 7px 20px;
+        color: #888;
+        font-size: 16px;
+      }
+      #drawer nav ul ul { margin: 0; }
+      #drawer nav ul ul a { padding-left: 30px; }
+      #drawer nav .nav-heading {
+        display: block;
+        padding: 7px 20px;
+        color: #888;
+        font-size: 16px;
+        line-height: 22px;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+      }
+      #main {
+        margin-left: 0;
+        padding: 64px 15px 30px;
+      }
+      #artwork {
+        max-width: 100%;
+        background: #fff;
+      }
+    }
+  </style>
 </head>
 <body>
-
-    <header>
-        <h1>My Ultra-Lightweight Site</h1>
-        <p>No framework. No tracking. No JavaScript. Pure content.</p>
-        <nav>
-            <ul>
-                <li><a href="#about">About</a></li>
-                <li><a href="#data">Data</a></li>
-                <li><a href="#contact">Contact</a></li>
+  <aside id="sidebar">
+    <div class="inner">
+      <a class="site-title" href="index.html">Christopher Karg</a>
+      <nav>
+        <ul>
+          <li>
+            <span class="nav-heading">Photo series</span>
+            <ul id="subcategory-nav">
+              <li><a href="subpage.html?category=Photo%20series&subcategory=Macro%20Prism">Macro Prism</a></li>
             </ul>
-        </nav>
-        <hr>
-    </header>
+          </li>
+          <li><a href="subpage.html?category=Graphics">Graphics</a></li>
+          <li><a href="subpage.html?category=About%20me">About me</a></li>
+          <li><a href="subpage.html?category=Contact">Contact</a></li>
+        </ul>
+      </nav>
+      <div id="social">
+         <a href="http://instagram.com/waker_cake" aria-label="Instagram"><img src="categ_img/About/instagram_icon.png" alt=""></a>
+      </div>
+      <div id="copyright">©Christopher Karg</div>
+    </div>
+  </aside>
 
-    <main>
-        <section id="about">
-            <h2>Why This Architecture?</h2>
-            <p>By using standard HTML5 tags with a tiny styling block, the page remains under 4KB, parses instantly, and renders accurately across every imaginable browsing platform.</p>
-        </section>
+  <div id="topbar">
+    <button id="menu-button" aria-label="Open menu"></button>
+    <div id="page-controls"><button aria-label="Previous">⌃</button><button aria-label="Next">⌄</button></div>
+  </div>
 
-        <section id="data">
-            <h2>Clean Data Tables</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Metric</th>
-                        <th>Performance Advantage</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Page Weight</td>
-                        <td>99% lighter than average web pages</td>
-                    </tr>
-                    <tr>
-                        <td>JS Overhead</td>
-                        <td>0ms execution time</td>
-                    </tr>
-                </tbody>
-            </table>
-        </section>
+  <aside id="drawer">
+    <nav>
+      <ul>
+        <li>
+          <span class="nav-heading">Photo series</span>
+          <ul id="drawer-subcategory-nav">
+            <li><a href="subpage.html?category=Photo%20series&subcategory=Macro%20Prism">Macro Prism</a></li>
+          </ul>
+        </li>
+        <li><a href="subpage.html?category=Graphics">Graphics</a></li>
+        <li><a href="subpage.html?category=About%20me">About me</a></li>
+        <li><a href="subpage.html?category=Contact">Contact</a></li>
+      </ul>
+    </nav>
+  </aside>
 
-        <section id="contact">
-            <h2>Drop a Message</h2>
-            <form action="/submit-handler" method="POST">
-                <label for="name">Name:</label>
-                <input type="text" id="name" name="name" required>
+  <main id="main">
+    <figure id="artwork">
+    <img id="random-artwork" src="images/Karg_Christopher_1-10.jpg" alt="Featured artwork">
+    </figure>
+  </main>
 
-                <label for="message">Message:</label>
-                <textarea id="message" name="message" rows="4" required></textarea>
+  <script>
+    const homepageImages = [
+      "images/DSC01500.JPG",
+      "images/IMG_2803.JPG",
+      "images/IMG_6893.jpg",
+      "images/IMG_9114.JPG",
+      "images/Karg_Christopher_1-2 Time.jpg",
+      "images/Karg_Christopher_Bulb.jpg",
+      "images/Karg_Christopher_Fan.jpg",
+      "images/Karg_Christopher_Leaf.jpg",
+      "images/Karg_Christopher_1-10.jpg",
+      "images/Karg_Christopher_1-12.jpg",
+      "images/Karg_Christopher_2-12.jpg",
+      "images/Karg_Christopher_3-12.jpg",
+      "images/Karg_Christopher_4-12.jpg",
+      "images/Karg_Christopher_5-12.jpg",
+      "images/Karg_Christopher_6-12.jpg",
+      "images/Karg_Christopher_7-12.jpg",
+      "images/Karg_Christopher_8-12.jpg",
+      "images/Karg_Christopher_9-12.jpg",
+      "images/Karg_Christopher_10-12.jpg",
+      "images/Karg_Christopher_11-12.jpg",
+      "images/Karg_Christopher_12-12.jpg"
+    ];
+    const randomImage = homepageImages[Math.floor(Math.random() * homepageImages.length)];
+    document.getElementById("random-artwork").src = randomImage;
 
-                <button type="submit">Send Message</button>
-            </form>
-        </section>
-    </main>
-
-    <footer>
-        <hr>
-        <p>&copy; 2026. Built for the open web.</p>
-    </footer>
-
+    const menuButton = document.getElementById("menu-button");
+    const drawer = document.getElementById("drawer");
+    menuButton.addEventListener("click", () => drawer.classList.toggle("open"));
+  </script>
 </body>
 </html>

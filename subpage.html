@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Christopher Karg</title>
+  <style>
+    * { box-sizing: border-box; }
+    html, body { margin: 0; }
+    body {
+      background: #fff;
+      color: #666;
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 14px;
+    }
+    a { color: inherit; text-decoration: none; }
+    ul { margin: 0; padding: 0; list-style: none; }
+    #sidebar {
+      position: fixed;
+      inset: 0 auto 0 0;
+      width: 270px;
+      height: 100%;
+      overflow-y: auto;
+      background: #fff;
+      z-index: 20;
+    }
+    #sidebar .inner { padding: 40px 40px 24px; }
+    .site-title {
+      display: block;
+      margin: 0 0 20px;
+      color: #26162c;
+      font-size: 28px;
+      line-height: 26px;
+      font-weight: 300;
+      text-transform: uppercase;
+    }
+    nav { margin-top: 32px; }
+    nav a {
+      display: block;
+      color: #444;
+      font-size: 16px;
+      line-height: 22px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+    nav .nav-heading {
+      display: block;
+      color: #444;
+      font-size: 16px;
+      line-height: 22px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+    nav li { margin: 0 0 6px; }
+    nav ul ul { margin: 6px 0 6px 15px; }
+    #subcategory-nav,
+    #drawer-subcategory-nav { margin: 6px 0 6px 15px; }
+    #subcategory-nav a,
+    #drawer-subcategory-nav a {
+      font-size: 14px;
+      line-height: 20px;
+      letter-spacing: 0;
+      text-transform: none;
+    }
+    #drawer-subcategory-nav { margin-left: 0; }
+    #drawer-subcategory-nav a { padding-left: 30px; }
+    #social { display: flex; gap: 7px; margin: 32px 0 30px; }
+    #social a { width: 14px; height: 14px; }
+    #social img { width: 14px; height: 14px; }
+    #copyright { color: #aaa; font-size: 11px; }
+    #main {
+      margin-left: 270px;
+      min-height: 100vh;
+      padding: 40px 57px 40px 30px;
+    }
+    #content { max-width: 770px; margin: 0 auto; }
+    h1 {
+      margin: 0 0 24px;
+      color: #26162c;
+      font-size: 24px;
+      font-weight: 300;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .back-link {
+      display: inline-block;
+      margin: 0 0 24px;
+      color: #444;
+      font-size: 12px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+    #category-image {
+      display: block;
+      width: 100%;
+      max-height: 580px;
+      margin: 0 0 24px;
+      background: #f4f4f4;
+      object-fit: cover;
+    }
+    #placeholder-text { max-width: 650px; margin: 0; line-height: 1.7; }
+    #subcategory-nav { margin: 0 0 24px 15px; }
+    #subcategory-nav a {
+      color: #444;
+      font-size: 14px;
+      letter-spacing: 0;
+      text-transform: none;
+    }
+    #subcategory-nav a.active { color: #26162c; font-weight: 700; }
+    #subcategory-gallery {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 32px 24px;
+      max-width: 770px;
+    }
+    .subcategory-set img {
+      display: block;
+      width: 100%;
+      max-height: 480px;
+      background: #f4f4f4;
+      object-fit: contain;
+    }
+    .subcategory-set p {
+      margin: 10px 0 0;
+      color: #666;
+      line-height: 1.5;
+    }
+    #subcategory-description {
+      max-width: 650px;
+      margin: 0 0 24px;
+      line-height: 1.7;
+    }
+    #topbar, #drawer { display: none; }
+    @media (max-width: 767px) {
+      #sidebar { display: none; }
+      #topbar {
+        display: block;
+        position: fixed;
+        inset: 0 0 auto 0;
+        height: 50px;
+        background: #fff;
+        z-index: 30;
+      }
+      #menu-button {
+        position: absolute;
+        left: 15px;
+        top: 0;
+        width: 30px;
+        height: 50px;
+        border: 0;
+        background: transparent;
+        color: #444;
+        font-size: 22px;
+        cursor: pointer;
+      }
+      #menu-button::before { content: "☰"; }
+      #drawer {
+        display: block;
+        position: fixed;
+        z-index: 40;
+        inset: 0 auto 0 0;
+        width: 240px;
+        overflow-y: auto;
+        background: #26162c;
+        transform: translateX(-260px);
+        transition: transform .25s ease;
+        padding: 15px 0;
+      }
+      #drawer.open { transform: translateX(0); }
+      #drawer nav { margin: 10px 0 20px; }
+      #drawer nav a {
+        display: block;
+        padding: 7px 20px;
+        color: #888;
+        font-size: 16px;
+      }
+      #drawer nav .nav-heading {
+        display: block;
+        padding: 7px 20px;
+        color: #888;
+        font-size: 16px;
+        line-height: 22px;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+      }
+      #main { margin-left: 0; padding: 64px 15px 30px; }
+      h1 { font-size: 20px; }
+      #subcategory-gallery { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+    <aside id="sidebar">
+    <div class="inner">
+      <a class="site-title" href="index.html">Christopher Karg</a>
+      <nav>
+        <ul>
+          <li id="photo-series-menu">
+            <span class="nav-heading">Photo series</span>
+            <ul id="subcategory-nav">
+              <li><a href="subpage.html?category=Photo%20series&subcategory=Macro%20Prism">Macro Prism</a></li>
+            </ul>
+          </li>
+          <li><a href="subpage.html?category=Graphics">Graphics</a></li>
+          <li><a href="subpage.html?category=About%20me">About me</a></li>
+          <li><a href="subpage.html?category=Contact">Contact</a></li>
+        </ul>
+      </nav>
+      <div id="social">
+        <a href="http://instagram.com/waker_cake" aria-label="Instagram"><img src="categ_img/About/instagram_icon.png" alt=""></a>
+      </div>
+      <div id="copyright">©Christopher Karg</div>
+    </div>
+  </aside>
+  <div id="topbar"><button id="menu-button" aria-label="Open menu"></button></div>
+  <aside id="drawer">
+    <nav>
+      <ul>
+        <li>
+          <span class="nav-heading">Photo series</span>
+          <ul id="drawer-subcategory-nav">
+            <li><a href="subpage.html?category=Photo%20series&subcategory=Macro%20Prism">Macro Prism</a></li>
+          </ul>
+        </li>
+        <li><a href="?category=Graphics">Graphics</a></li>
+        <li><a href="?category=About%20me">About me</a></li>
+        <li><a href="?category=Contact">Contact</a></li>
+      </ul>
+    </nav>
+  </aside>
+  <main id="main">
+    <div id="content">
+      <a class="back-link" href="index.html">&larr; Home</a>
+      <h1 id="category-title">Category</h1>
+      <img id="category-image" src="images/Karg_Christopher_1-10.jpg" alt="Category artwork">
+      <div id="category-text"></div>
+      <p id="subcategory-description"></p>
+      <div id="subcategory-gallery"></div>
+    </div>
+  </main>
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const category = params.get("category") || "Category";
+    const subcategory = params.get("subcategory");
+
+    const categoryContent = {
+      "Photo series": {
+        subcategories: {
+          "Macro Prism": {
+            description: "A study of macro diffraction and refraction through water droplets against a reflective disk surface.",
+            images: [
+              { src: "images/Karg_Christopher_1-12.jpg", detail: "Prismatic Landscape, Digital Photograph, 2026, Dimensions variable" },
+              { src: "images/Karg_Christopher_2-12.jpg", detail: "Busy Stream, Digital Photograph, 2026, Dimensions variable" },
+              { src: "images/Karg_Christopher_3-12.jpg", detail: "Dragon Dance, Digital Photograph, 2026, Dimensions variable" },
+              { src: "images/Karg_Christopher_4-12.jpg", detail: "The Seashore, Digital Photograph, 2026, Dimensions variable" },
+              { src: "images/Karg_Christopher_5-12.jpg", detail: "Electric Desert, Digital Photograph, 2026, Dimensions variable" },
+              { src: "images/Karg_Christopher_6-12.jpg", detail: "A Violet Path, Digital Photograph, 2026, Dimensions variable" },
+              { src: "images/Karg_Christopher_7-12.jpg", detail: "Blade of Grass, Digital Photograph, 2026, Dimensions variable" },
+              { src: "images/Karg_Christopher_8-12.jpg", detail: "A Spot of Zen, Digital Photograph, 2026, Dimensions variable" },
+              { src: "images/Karg_Christopher_9-12.jpg", detail: "Orbiting Aurora, Digital Photograph, 2026, Dimensions variable" },
+              { src: "images/Karg_Christopher_10-12.jpg", detail: "Strange Planet, Digital Photograph, 2026, Dimensions variable" },
+              { src: "images/Karg_Christopher_11-12.jpg", detail: "A Beach Unknown, Digital Photograph, 2026, Dimensions variable" },
+              { src: "images/Karg_Christopher_12-12.jpg", detail: "Bathing in Sunset, Digital Photograph, 2026, Dimensions variable" }
+            ]
+          }
+        }
+      },
+      "Graphics": {
+        image: "categ_img/graphics/FOXTAIL_wordmark.png",
+        additionalImages: [
+          "categ_img/graphics/FOXTAIL_Overview.png",
+          "categ_img/graphics/foxtail_coffeebag.jpg"
+        ],
+        text: [
+          "Branding and graphic design projects by Christopher Karg."
+        ]
+      },
+      "About me": {
+        image: "categ_img/About/IMG_9053.JPG",
+        text: [
+          "Christopher Karg is a Bachelor of Arts candidate at the University of Alabama at Birmingham, specializing in photography and graphic design. His creative processes explore the dynamic relationship between lens based documentation and digital precision, creating cohesive visual connections between physical media and digital environments.",
+          "In his photographic work, Karg balances controlled studio environments with spontaneous field studies. His portfolio spans candid urban architecture, atmospheric mountain landscapes, and experimental studio lighting arrangements that examine physical form, light reflection, and highlight control. Complementing his photography, his graphic design practice focuses on corporate brand identity systems, custom typography, packaging concepts, and high contrast vector illustrations.",
+          "Karg’s photography was selected for inclusion in UAB’s 50th Annual Juried Student Exhibition. Following his graduation from the University of Alabama at Birmingham, he aims to continue building comprehensive design systems, studio brand identity projects, and fine art imagery."
+        ]
+      },
+      "Contact": {
+        image: "categ_img/About/Contact.JPG",
+        text: [
+          "Christopher Karg can be reached via email at christopher.karg@gmail.com or through his social media channels."
+        ]
+      }
+    };
+
+    const content = categoryContent[category] || {
+      image: "images/Karg_Christopher_1-10.jpg",
+      text: ["Placeholder text for this category."]
+    };
+
+    document.getElementById("category-title").textContent = category;
+    document.title = category + " - Christopher Karg";
+
+    const categoryImage = document.getElementById("category-image");
+    if (content.image) {
+      categoryImage.src = content.image;
+      categoryImage.alt = category + " artwork";
+    }
+
+    const categoryText = document.getElementById("category-text");
+    categoryText.replaceChildren();
+    const subcategoryDescription = document.getElementById("subcategory-description");
+    const subcategoryGallery = document.getElementById("subcategory-gallery");
+    subcategoryDescription.textContent = "";
+    subcategoryGallery.replaceChildren();
+
+    if (category === "Photo series" && content.subcategories) {
+      const subcategoryNames = Object.keys(content.subcategories);
+      const subcategoryNav = document.getElementById("subcategory-nav");
+      const drawerSubcategoryNav = document.getElementById("drawer-subcategory-nav");
+      subcategoryNav.replaceChildren();
+      drawerSubcategoryNav.replaceChildren();
+
+      subcategoryNames.forEach((name) => {
+        const encodedName = encodeURIComponent(name);
+        const link = document.createElement("a");
+        link.href = `subpage.html?category=Photo%20series&subcategory=${encodedName}`;
+        link.textContent = name;
+        if ((subcategory || subcategoryNames[0]) === name) link.className = "active";
+
+        const item = document.createElement("li");
+        item.appendChild(link);
+        subcategoryNav.appendChild(item);
+
+        const drawerLink = link.cloneNode(true);
+        const drawerItem = document.createElement("li");
+        drawerItem.appendChild(drawerLink);
+        drawerSubcategoryNav.appendChild(drawerItem);
+      });
+    }
+
+    const selectedSubcategoryName = category === "Photo series"
+      ? (subcategory || Object.keys(content.subcategories || {})[0])
+      : null;
+    const selectedSubcategory = category === "Photo series"
+      ? content.subcategories?.[selectedSubcategoryName]
+      : null;
+
+    if (selectedSubcategory) {
+      document.getElementById("category-image").style.display = "none";
+      document.getElementById("category-title").textContent = selectedSubcategoryName;
+      document.title = selectedSubcategoryName + " - Christopher Karg";
+      subcategoryDescription.textContent = selectedSubcategory.description;
+
+      selectedSubcategory.images.forEach((imageSet) => {
+        const set = document.createElement("figure");
+        set.className = "subcategory-set";
+
+        const image = document.createElement("img");
+        image.src = imageSet.src;
+        image.alt = selectedSubcategoryName + " artwork";
+
+        const detail = document.createElement("p");
+        detail.textContent = imageSet.detail;
+
+        set.appendChild(image);
+        set.appendChild(detail);
+        subcategoryGallery.appendChild(set);
+      });
+    } else {
+      document.getElementById("category-image").style.display = "block";
+      (content.additionalImages || []).forEach((src) => {
+        const set = document.createElement("figure");
+        set.className = "subcategory-set";
+
+        const image = document.createElement("img");
+        image.src = src;
+        image.alt = category + " artwork";
+
+        set.appendChild(image);
+        subcategoryGallery.appendChild(set);
+      });
+      content.text.forEach((paragraph) => {
+        const p = document.createElement("p");
+        p.textContent = paragraph;
+        p.style.maxWidth = "650px";
+        p.style.lineHeight = "1.7";
+        categoryText.appendChild(p);
+      });
+    }
+
+    const menuButton = document.getElementById("menu-button");
+    const drawer = document.getElementById("drawer");
+    menuButton.addEventListener("click", () => drawer.classList.toggle("open"));
+  </script>
+</body>
+</html>
