@@ -90,6 +90,17 @@
       letter-spacing: 1px;
       text-transform: uppercase;
     }
+    .resume-link {
+      display: inline-block;
+      margin: 8px 0 24px;
+      padding: 10px 16px;
+      border: 1px solid #26162c;
+      color: #26162c;
+      font-size: 12px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+    .resume-link:hover { background: #26162c; color: #fff; }
     #category-image {
       display: block;
       width: 100%;
@@ -202,7 +213,7 @@
             </ul>
           </li>
           <li><a href="subpage.html?category=Graphics">Graphics</a></li>
-          <li><a href="subpage.html?category=About%20me">About me</a></li>
+          <li><a href="subpage.html?category=Bio">Bio</a></li>
           <li><a href="subpage.html?category=Contact">Contact</a></li>
         </ul>
       </nav>
@@ -223,7 +234,7 @@
           </ul>
         </li>
         <li><a href="?category=Graphics">Graphics</a></li>
-        <li><a href="?category=About%20me">About me</a></li>
+        <li><a href="subpage.html?category=Bio">Bio</a></li>
         <li><a href="?category=Contact">Contact</a></li>
       </ul>
     </nav>
@@ -275,8 +286,9 @@
           "Branding and graphic design projects by Christopher Karg."
         ]
       },
-      "About me": {
+      "Bio": {
         image: "categ_img/About/IMG_9053.JPG",
+        resume: "ChristopherKargResume.html",
         text: [
           "Christopher Karg is a Bachelor of Arts candidate at the University of Alabama at Birmingham, specializing in photography and graphic design. His creative processes explore the dynamic relationship between lens based documentation and digital precision, creating cohesive visual connections between physical media and digital environments.",
           "In his photographic work, Karg balances controlled studio environments with spontaneous field studies. His portfolio spans candid urban architecture, atmospheric mountain landscapes, and experimental studio lighting arrangements that examine physical form, light reflection, and highlight control. Complementing his photography, his graphic design practice focuses on corporate brand identity systems, custom typography, packaging concepts, and high contrast vector illustrations.",
@@ -385,6 +397,13 @@
         p.style.lineHeight = "1.7";
         categoryText.appendChild(p);
       });
+      if (content.resume) {
+        const resumeLink = document.createElement("a");
+        resumeLink.className = "resume-link";
+        resumeLink.href = content.resume;
+        resumeLink.textContent = "View resume";
+        categoryText.appendChild(resumeLink);
+      }
     }
 
     const menuButton = document.getElementById("menu-button");
